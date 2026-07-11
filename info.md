@@ -10,3 +10,6 @@ gallons used, gallons remaining, and estimated replacement date.
 Preset reverse osmosis filters are available for Waterdrop X12 F1A, F2, and
 X12-F3 RO membrane replacement schedules, while Custom remains available for
 other reverse osmosis filters.
+
+Use `waterdrop_filter_tracker.reset_filter` from a dashboard button or
+automation to reset a tracker installation date to today.
