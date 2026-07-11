@@ -1,6 +1,6 @@
 {
   "name": "Waterdrop Filter Tracker",
   "render_readme": true,
-  "domains": ["sensor"],
+  "hacs": "2.0.0",
   "homeassistant": "2024.6.0"
 }
