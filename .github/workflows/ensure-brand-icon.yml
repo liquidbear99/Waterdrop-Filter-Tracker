@@ -1,0 +1,63 @@
+name: Ensure brand icon
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ensure-brand-icon.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ensure-brand-icon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Write brand icon
+        run: |
+          mkdir -p brand
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+
+          icon = (
+              "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADtUlEQVR4nO3YwY7bMAwFQPv/f9sv"
+              "90h3KQNSRLYg7aYJQ+QEtx4cqBIgJwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+              "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+              "AAAAAAAAAAAAAAAAAAAAAADg1c3j5fWJhmk+9Pz5d8t9o8+Tz6v7gW8edT8AgIIAAEoCAKgJAKAm"
+              "AICaAABqAgCoCQBg2+t6zYf8+3p9Wvfx+3p9Wvfx+3p9Wvfx+3p9Wvfx+3p9Wvfx+3p9Wvdx9wUA"
+              "KAgAoCYAgJoAAGoCAKgJAKAmAICaAAB2d3f9xr+f9cXn4/D9ffD3Xw0AKAgAoCYAgJoAAGoCAKgJ"
+              "AKAmAICaAADm8fHxb/x6eHj4G9++ffsfBQAoCACgJgCAmgAAagIAqAkAoCYAgJoAALa3t/3Gz58/"
+              "/w2fP3/+G8UAKAgAoCYAgJoAAGoCAKgJAKAmAICaAACePXv2Gz9//vw3fPny5W8UA6AgAICaAABq"
+              "AgCoCQBgx44d/4ZPnz7/DZ8+ffobxQAoCACgJgCAmgAAagIAaG1t/Ru/fv36N3z69OlvFACgIACA"
+              "mgAAagIAqAkAYHJy8m/89evXv+Hbt29/oxgABQEAlAQAUFMAADUBANjY2Pgbv3379m/49OnT3ygG"
+              "QEEAADUBANQEAFATAABmZ2f/xk+fPv0bnz59+hvFACgIAKAmAICaAABqAgD48OHD3/D+/fvf8OHD"
+              "h79RDIACAABqAgCoCQBgZmbmb/z06dOf8OnTp79RDIACAABqAgCoCQBgYmLib/z27dt/46dPn/5G"
+              "MQAKAACoCQCgJgCAmgAAfv36Zd7w/fv3v1EMgIIAAGoCAKgJAGBwcPBv/Pjx49/w8ePHv1EMgIIA"
+              "AGoCAKgJAKAmAIAHDx78xk+fPv0bnz59+hvFACgIAKAmAICaAADu7u7+jb9+/fo3fPr06W8UA6Ag"
+              "AICaAABqAgCoCQBgcHDwb/z48eNf8PHjx79RDIACAABqAgCoCQBgdnb2b/z06dOf8OnTp79RDIAC"
+              "AABqAgCoCQCgJgCA169f/wa/evXq3/Dp06e/UQyAggAAagIAqAkA4O7u7t/469evf8OnT5/+RjEA"
+              "CgIAqAkAoCYAgJoAAB4+fPgbPnz48G/49OnT3ygGQEEAADUBANQEAFATAABmZ2f/xk+fPv0bnz59"
+              "+hvFACgIAKAmAICaAABqAgD48OHD3/D+/fvf8OHDh79RDIACAABqAgCoCQBgYmLib/z27dt/46dP"
+              "n/5GMQAKAACoCQCgJgCAmgAAfv36Zd7w/fv3v1EMgIIAAGoCAKgJAKAmAIDf4m1gVnF2c6EAAAAA"
+              "SUVORK5CYII="
+          )
+          Path("brand/icon.png").write_bytes(base64.b64decode(icon))
+          PY
+
+      - name: Commit brand icon
+        run: |
+          if git diff --quiet -- brand/icon.png; then
+            echo "brand/icon.png already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add brand/icon.png
+          git commit -m "Add HACS brand icon"
+          git push
