@@ -52,7 +52,7 @@ jobs:
 
       - name: Commit brand icon
         run: |
-          if git diff --quiet -- brand/icon.png; then
+          if [ -z "$(git status --porcelain -- brand/icon.png)" ]; then
             echo "brand/icon.png already up to date"
             exit 0
           fi
