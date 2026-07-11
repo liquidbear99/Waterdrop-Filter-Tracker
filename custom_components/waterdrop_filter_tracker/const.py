@@ -24,15 +24,18 @@ FILTER_PRESETS = {
         "label": "Waterdrop X12 F1A",
         "filter_name": "Waterdrop X12 F1A",
         "rated_life_days": 365,
+        "rated_capacity_gallons": 1100.0,
     },
     PRESET_X12_F2: {
         "label": "Waterdrop X12 F2",
         "filter_name": "Waterdrop X12 F2",
-        "rated_life_days": 183,
+        "rated_life_days": 180,
+        "rated_capacity_gallons": 550.0,
     },
     PRESET_X12_F3: {
-        "label": "Waterdrop X12-F3",
-        "filter_name": "Waterdrop X12-F3",
+        "label": "Waterdrop X12-F3 RO membrane",
+        "filter_name": "Waterdrop X12-F3 RO membrane",
         "rated_life_days": 730,
+        "rated_capacity_gallons": 2900.0,
     },
 }
