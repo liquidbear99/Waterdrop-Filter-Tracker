@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Waterdrop Filter Tracker",
+        "description": "Add a Waterdrop filter to track replacement timing.",
+        "data": {
+          "filter_name": "Filter name",
+          "install_date": "Installation date",
+          "rated_life_days": "Rated life",
+          "rated_capacity_gallons": "Rated capacity",
+          "daily_usage_gallons": "Estimated daily usage"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Waterdrop Filter Tracker options",
+        "data": {
+          "filter_name": "Filter name",
+          "install_date": "Installation date",
+          "rated_life_days": "Rated life",
+          "rated_capacity_gallons": "Rated capacity",
+          "daily_usage_gallons": "Estimated daily usage"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "days_remaining": {
+        "name": "Days remaining"
+      },
+      "life_remaining": {
+        "name": "Life remaining"
+      },
+      "estimated_used": {
+        "name": "Estimated used"
+      },
+      "gallons_remaining": {
+        "name": "Gallons remaining"
+      },
+      "replacement_date": {
+        "name": "Replacement date"
+      }
+    }
+  }
+}
