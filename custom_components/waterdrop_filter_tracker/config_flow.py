@@ -13,6 +13,7 @@ from homeassistant.helpers import selector
 from .const import (
     CONF_DAILY_USAGE_GALLONS,
     CONF_FILTER_NAME,
+    CONF_FILTER_PRESET,
     CONF_INSTALL_DATE,
     CONF_RATED_CAPACITY_GALLONS,
     CONF_RATED_LIFE_DAYS,
@@ -21,10 +22,54 @@ from .const import (
     DEFAULT_RATED_CAPACITY_GALLONS,
     DEFAULT_RATED_LIFE_DAYS,
     DOMAIN,
+    FILTER_PRESETS,
+    PRESET_CUSTOM,
 )
 
 
-def _data_schema(defaults: dict[str, Any] | None = None) -> vol.Schema:
+def _preset_schema(default_preset: str = PRESET_CUSTOM) -> vol.Schema:
+    """Build the preset selection schema."""
+    options = [
+        selector.SelectOptionDict(value=PRESET_CUSTOM, label="Custom"),
+        *(
+            selector.SelectOptionDict(value=preset_key, label=preset["label"])
+            for preset_key, preset in FILTER_PRESETS.items()
+        ),
+    ]
+
+    return vol.Schema(
+        {
+            vol.Required(
+                CONF_FILTER_PRESET,
+                default=default_preset,
+            ): selector.SelectSelector(
+                selector.SelectSelectorConfig(
+                    options=options,
+                    mode=selector.SelectSelectorMode.DROPDOWN,
+                )
+            ),
+        }
+    )
+
+
+def _defaults_for_preset(
+    preset_key: str,
+    defaults: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Merge saved/default data with preset defaults."""
+    merged_defaults = defaults.copy() if defaults else {}
+    preset = FILTER_PRESETS.get(preset_key)
+    if preset is None:
+        return merged_defaults
+
+    merged_defaults[CONF_FILTER_NAME] = preset["filter_name"]
+    merged_defaults[CONF_RATED_LIFE_DAYS] = preset["rated_life_days"]
+    return merged_defaults
+
+
+def _data_schema(
+    defaults: dict[str, Any] | None = None,
+) -> vol.Schema:
     """Build the config/options schema."""
     defaults = defaults or {}
     return vol.Schema(
@@ -86,21 +131,37 @@ class WaterdropFilterTrackerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN)
     """Handle a config flow for Waterdrop Filter Tracker."""
 
     VERSION = 1
+    _selected_preset: str
 
     async def async_step_user(
         self,
         user_input: dict[str, Any] | None = None,
     ) -> config_entries.ConfigFlowResult:
-        """Handle the initial step."""
+        """Select a Waterdrop filter preset."""
         if user_input is not None:
+            self._selected_preset = user_input[CONF_FILTER_PRESET]
+            return await self.async_step_filter_details()
+
+        return self.async_show_form(
+            step_id="user",
+            data_schema=_preset_schema(),
+        )
+
+    async def async_step_filter_details(
+        self,
+        user_input: dict[str, Any] | None = None,
+    ) -> config_entries.ConfigFlowResult:
+        """Handle filter details after preset selection."""
+        if user_input is not None:
+            user_input[CONF_FILTER_PRESET] = self._selected_preset
             return self.async_create_entry(
                 title=user_input[CONF_FILTER_NAME],
                 data=user_input,
             )
 
         return self.async_show_form(
-            step_id="user",
-            data_schema=_data_schema(),
+            step_id="filter_details",
+            data_schema=_data_schema(_defaults_for_preset(self._selected_preset)),
         )
 
     @staticmethod
@@ -117,17 +178,37 @@ class WaterdropFilterTrackerOptionsFlow(config_entries.OptionsFlow):
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
         """Initialize options flow."""
         self._config_entry = config_entry
+        self._selected_preset: str = PRESET_CUSTOM
 
     async def async_step_init(
         self,
         user_input: dict[str, Any] | None = None,
     ) -> config_entries.ConfigFlowResult:
+        """Select a Waterdrop filter preset for options."""
+        if user_input is not None:
+            self._selected_preset = user_input[CONF_FILTER_PRESET]
+            return await self.async_step_filter_details()
+
+        defaults = {**self._config_entry.data, **self._config_entry.options}
+        default_preset = str(defaults.get(CONF_FILTER_PRESET, PRESET_CUSTOM))
+        return self.async_show_form(
+            step_id="init",
+            data_schema=_preset_schema(default_preset),
+        )
+
+    async def async_step_filter_details(
+        self,
+        user_input: dict[str, Any] | None = None,
+    ) -> config_entries.ConfigFlowResult:
         """Manage the integration options."""
         if user_input is not None:
+            user_input[CONF_FILTER_PRESET] = self._selected_preset
             return self.async_create_entry(title="", data=user_input)
 
         defaults = {**self._config_entry.data, **self._config_entry.options}
         return self.async_show_form(
-            step_id="init",
-            data_schema=_data_schema(defaults),
+            step_id="filter_details",
+            data_schema=_data_schema(
+                _defaults_for_preset(self._selected_preset, defaults),
+            ),
         )
