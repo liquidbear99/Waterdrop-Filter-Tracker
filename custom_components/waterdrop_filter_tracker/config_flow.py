@@ -64,6 +64,9 @@ def _defaults_for_preset(
 
     merged_defaults[CONF_FILTER_NAME] = preset["filter_name"]
     merged_defaults[CONF_RATED_LIFE_DAYS] = preset["rated_life_days"]
+    merged_defaults[CONF_RATED_CAPACITY_GALLONS] = preset[
+        "rated_capacity_gallons"
+    ]
     return merged_defaults
 
 
