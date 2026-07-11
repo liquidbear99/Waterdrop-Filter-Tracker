@@ -1,6 +1,6 @@
 # Waterdrop Filter Tracker
 
-![Waterdrop Filter Tracker icon](https://raw.githubusercontent.com/liquidbear99/Waterdrop-Filter-Tracker/main/brand/icon.png)
+![Waterdrop Filter Tracker icon](https://raw.githubusercontent.com/liquidbear99/Waterdrop-Filter-Tracker/main/custom_components/waterdrop_filter_tracker/brand/icon.png)
 
 A HACS-ready Home Assistant custom integration for tracking Waterdrop filter
 replacement timing from installation date, rated lifespan, rated capacity, and
@@ -64,5 +64,5 @@ This repository is structured as a HACS integration repository:
 - The integration lives under `custom_components/waterdrop_filter_tracker`.
 - The integration manifest includes `domain`, `documentation`, `issue_tracker`,
   `codeowners`, `name`, and `version`.
-- Brand assets live under `brand/`.
+- Brand assets live under `custom_components/waterdrop_filter_tracker/brand/`.
 - GitHub Actions validate the repository with HACS and Hassfest.
