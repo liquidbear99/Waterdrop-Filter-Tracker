@@ -61,7 +61,21 @@ life and capacity-based life.
 
 ## Release
 
-Current version: `v1.1.1`
+Current version: `v1.1.2`
+
+## Reset Service
+
+The integration provides `waterdrop_filter_tracker.reset_filter` for dashboard
+buttons and automations. Pass either `filter_preset` or `entry_id`; the matching
+tracker installation date is reset to today.
+
+Example:
+
+```yaml
+action: waterdrop_filter_tracker.reset_filter
+data:
+  filter_preset: waterdrop_x12_f1a
+```
 
 ## HACS Compliance
 
