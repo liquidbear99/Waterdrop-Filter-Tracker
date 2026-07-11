@@ -3,7 +3,14 @@
     "step": {
       "user": {
         "title": "Waterdrop Filter Tracker",
-        "description": "Add a Waterdrop filter to track replacement timing.",
+        "description": "Select a Waterdrop reverse osmosis filter preset or choose custom.",
+        "data": {
+          "filter_preset": "Filter preset"
+        }
+      },
+      "filter_details": {
+        "title": "Waterdrop Filter Tracker",
+        "description": "Confirm the filter details. Preset lifespans can be adjusted if needed.",
         "data": {
           "filter_name": "Filter name",
           "install_date": "Installation date",
@@ -18,6 +25,14 @@
     "step": {
       "init": {
         "title": "Waterdrop Filter Tracker options",
+        "description": "Select a Waterdrop reverse osmosis filter preset or choose custom.",
+        "data": {
+          "filter_preset": "Filter preset"
+        }
+      },
+      "filter_details": {
+        "title": "Waterdrop Filter Tracker options",
+        "description": "Confirm the filter details. Preset lifespans can be adjusted if needed.",
         "data": {
           "filter_name": "Filter name",
           "install_date": "Installation date",
