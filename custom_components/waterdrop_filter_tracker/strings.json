@@ -10,7 +10,7 @@
       },
       "filter_details": {
         "title": "Waterdrop Filter Tracker",
-        "description": "Confirm the filter details. Preset lifespans can be adjusted if needed.",
+        "description": "Confirm the filter details. Preset lifespan and capacity can be adjusted if needed.",
         "data": {
           "filter_name": "Filter name",
           "install_date": "Installation date",
@@ -32,7 +32,7 @@
       },
       "filter_details": {
         "title": "Waterdrop Filter Tracker options",
-        "description": "Confirm the filter details. Preset lifespans can be adjusted if needed.",
+        "description": "Confirm the filter details. Preset lifespan and capacity can be adjusted if needed.",
         "data": {
           "filter_name": "Filter name",
           "install_date": "Installation date",
