@@ -36,14 +36,15 @@ Copy `custom_components/waterdrop_filter_tracker` into your Home Assistant
 1. In Home Assistant, go to **Settings > Devices & services**.
 2. Select **Add integration**.
 3. Search for **Waterdrop Filter Tracker**.
-4. Choose a preset or **Custom**, then enter the installation date, rated
-   capacity, and estimated daily usage.
+4. Choose a preset or **Custom**, then enter the installation date and estimated
+   daily usage. Presets fill in rated life and capacity, and both values remain
+   editable.
 
 Available reverse osmosis presets:
 
-- Waterdrop X12 F1A: 365 days
-- Waterdrop X12 F2: 183 days
-- Waterdrop X12-F3: 730 days
+- Waterdrop X12 F1A: 12 months, up to 1,100 gallons
+- Waterdrop X12 F2: 6 months, up to 550 gallons
+- Waterdrop X12-F3 RO membrane: 24 months, up to 2,900 gallons
 
 ## Sensors
 
@@ -60,7 +61,7 @@ life and capacity-based life.
 
 ## Release
 
-Current version: `v1.1.0`
+Current version: `v1.1.1`
 
 ## HACS Compliance
 
