@@ -9,6 +9,9 @@ CONF_RATED_LIFE_DAYS = "rated_life_days"
 CONF_RATED_CAPACITY_GALLONS = "rated_capacity_gallons"
 CONF_DAILY_USAGE_GALLONS = "daily_usage_gallons"
 
+SERVICE_RESET_FILTER = "reset_filter"
+SERVICE_FIELD_ENTRY_ID = "entry_id"
+
 PRESET_CUSTOM = "custom"
 PRESET_X12_F1A = "waterdrop_x12_f1a"
 PRESET_X12_F2 = "waterdrop_x12_f2"
