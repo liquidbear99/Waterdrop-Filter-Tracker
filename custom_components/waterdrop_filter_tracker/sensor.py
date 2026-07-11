@@ -22,6 +22,7 @@ from homeassistant.util import dt as dt_util
 from .const import (
     CONF_DAILY_USAGE_GALLONS,
     CONF_FILTER_NAME,
+    CONF_FILTER_PRESET,
     CONF_INSTALL_DATE,
     CONF_RATED_CAPACITY_GALLONS,
     CONF_RATED_LIFE_DAYS,
@@ -30,6 +31,7 @@ from .const import (
     DEFAULT_RATED_CAPACITY_GALLONS,
     DEFAULT_RATED_LIFE_DAYS,
     DOMAIN,
+    PRESET_CUSTOM,
 )
 
 
@@ -37,6 +39,7 @@ from .const import (
 class FilterMetrics:
     """Calculated filter metrics."""
 
+    filter_preset: str
     filter_name: str
     installed_on: date
     rated_life_days: int
@@ -89,6 +92,7 @@ class FilterMetrics:
         )
 
         return cls(
+            filter_preset=str(data.get(CONF_FILTER_PRESET, PRESET_CUSTOM)),
             filter_name=str(data.get(CONF_FILTER_NAME, DEFAULT_FILTER_NAME)),
             installed_on=installed_on,
             rated_life_days=rated_life_days,
@@ -190,6 +194,7 @@ class WaterdropFilterSensor(SensorEntity):
         """Return filter calculation details."""
         metrics = FilterMetrics.from_entry(self._entry)
         return {
+            "filter_preset": metrics.filter_preset,
             "filter_name": metrics.filter_name,
             "installed_on": metrics.installed_on.isoformat(),
             "rated_life_days": metrics.rated_life_days,
