@@ -1,0 +1,23 @@
+reset_filter:
+  name: Reset filter
+  description: Reset one or more Waterdrop filter trackers by setting the installation date to today.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Reset a specific Waterdrop filter tracker config entry.
+      example: "01HZYEXAMPLEENTRYID"
+      selector:
+        text: {}
+    filter_preset:
+      name: Filter preset
+      description: Reset all Waterdrop filter trackers using this preset.
+      example: "waterdrop_x12_f1a"
+      selector:
+        select:
+          options:
+            - label: Waterdrop X12 F1A
+              value: waterdrop_x12_f1a
+            - label: Waterdrop X12 F2
+              value: waterdrop_x12_f2
+            - label: Waterdrop X12-F3 RO membrane
+              value: waterdrop_x12_f3
