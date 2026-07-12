@@ -77,6 +77,100 @@ data:
   filter_preset: waterdrop_x12_f1a
 ```
 
+## Dashboard Card
+
+This dashboard card shows replacement dates, life remaining gauges, and
+press-and-hold reset buttons for the three Waterdrop X12 filters. Update the
+entity IDs if Home Assistant generated different names.
+
+```yaml
+type: vertical-stack
+cards:
+  - type: entities
+    title: Waterdrop X12 Filters
+    show_header_toggle: false
+    entities:
+      - entity: sensor.waterdrop_x12_f1a_replacement_date
+        name: F1A replacement date
+      - entity: sensor.waterdrop_x12_f2_replacement_date
+        name: F2 replacement date
+      - entity: sensor.waterdrop_x12_f3_ro_membrane_replacement_date
+        name: X12-F3 RO replacement date
+
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - type: gauge
+        entity: sensor.waterdrop_x12_f1a_life_remaining
+        name: F1A Life
+        min: 0
+        max: 100
+        severity:
+          green: 25
+          yellow: 15
+          red: 0
+        needle: true
+      - type: gauge
+        entity: sensor.waterdrop_x12_f2_life_remaining
+        name: F2 Life
+        min: 0
+        max: 100
+        severity:
+          green: 25
+          yellow: 15
+          red: 0
+        needle: true
+      - type: gauge
+        entity: sensor.waterdrop_x12_f3_ro_membrane_life_remaining
+        name: X12-F3 RO Life
+        min: 0
+        max: 100
+        severity:
+          green: 25
+          yellow: 15
+          red: 0
+        needle: true
+
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - type: button
+        name: Reset F1A
+        icon: mdi:filter-sync
+        show_state: false
+        tap_action:
+          action: none
+        hold_action:
+          action: call-service
+          service: waterdrop_filter_tracker.reset_filter
+          data:
+            filter_preset: waterdrop_x12_f1a
+      - type: button
+        name: Reset F2
+        icon: mdi:filter-sync
+        show_state: false
+        tap_action:
+          action: none
+        hold_action:
+          action: call-service
+          service: waterdrop_filter_tracker.reset_filter
+          data:
+            filter_preset: waterdrop_x12_f2
+      - type: button
+        name: Reset X12-F3
+        icon: mdi:filter-sync
+        show_state: false
+        tap_action:
+          action: none
+        hold_action:
+          action: call-service
+          service: waterdrop_filter_tracker.reset_filter
+          data:
+            filter_preset: waterdrop_x12_f3
+```
+
 ## HACS Compliance
 
 This repository is structured as a HACS integration repository:
